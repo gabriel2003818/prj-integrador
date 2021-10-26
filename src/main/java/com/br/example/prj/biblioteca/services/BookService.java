@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
-    //implmentar crud
+    //implementar crud
 
     Book save(Book book);
 
