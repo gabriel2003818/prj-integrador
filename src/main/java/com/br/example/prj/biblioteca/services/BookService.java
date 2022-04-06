@@ -11,20 +11,14 @@ import java.util.Optional;
 public interface BookService {
     //implementar crud
 
-    Book save(Book book);
-
-    //send and exception
-    Optional<Book> findById(Long bookId);
-
-    List<Book> findAllByTitle(String title,Pageable pageable);
-
-    List<Book> findAllBooks();
-
     Page<Book> findAll(Pageable pageable);
 
+    Page<Book> findByTitleContaining(String title, Pageable pageable);
+    
+    Book save(Book book);
+
+    Optional<Book> findById(Long bookId);
+
     void deleteBookById(Long bookId);
-
-
-
 
 }

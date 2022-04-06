@@ -1,19 +1,19 @@
 package com.br.example.prj.biblioteca.repositories;
 
-import com.br.example.prj.biblioteca.models.Book;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
+import com.br.example.prj.biblioteca.models.Book;
 
 @Repository
-public interface BookRepository extends PagingAndSortingRepository<Book, Long> {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
-    List<Book> findByTitleContaining(String title,Pageable pageable);
+	Page<Book> findAll(Pageable pageable);
 
+	//Page<Book> findByPublished(boolean published, Pageable pageable);
 
+	Page<Book> findByTitleContaining(String title, Pageable pageable);
 
 }
-
