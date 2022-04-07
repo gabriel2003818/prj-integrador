@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import Pagination from "@material-ui/lab/Pagination";
-import TutorialDataService from "../services/TutorialService";
+import BookDataService from "../services/BookService";
 import { useTable } from "react-table";
 
 
-const TutorialsList = (props) => {
-  const [tutorials, setTutorials] = useState([]);
+const BookList = (props) => {
+  const [books, setBooks] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
-  const tutorialsRef = useRef();
+  const booksRef = useRef();
 
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -15,7 +15,7 @@ const TutorialsList = (props) => {
 
   const pageSizes = [3, 6, 9];
 
-  tutorialsRef.current = tutorials;
+  booksRef.current = books;
 
   const onChangeSearchTitle = (e) => {
     const searchTitle = e.target.value;
@@ -40,14 +40,14 @@ const TutorialsList = (props) => {
     return params;
   };
 
-  const retrieveTutorials = () => {
+  const retrieveBooks = () => {
     const params = getRequestParams(searchTitle, page, pageSize);
 
-    TutorialDataService.getAll(params)
+    BookDataService.getAll(params)
       .then((response) => {
-        const { tutorials, totalPages } = response.data;
+        const { books, totalPages } = response.data;
 
-        setTutorials(tutorials);
+        setBooks(books);
         setCount(totalPages);
 
         console.log(response.data);
@@ -57,14 +57,14 @@ const TutorialsList = (props) => {
       });
   };
 
-  useEffect(retrieveTutorials, [page, pageSize]);
+  useEffect(retrieveBooks, [page, pageSize]);
 
   const refreshList = () => {
-    retrieveTutorials();
+    retrieveBooks();
   };
 
-  const removeAllTutorials = () => {
-    TutorialDataService.removeAll()
+  const removeAllBooks = () => {
+    BookDataService.removeAll()
       .then((response) => {
         console.log(response.data);
         refreshList();
@@ -76,26 +76,26 @@ const TutorialsList = (props) => {
 
   const findByTitle = () => {
     setPage(1);
-    retrieveTutorials();
+    retrieveBooks();
   };
 
-  const openTutorial = (rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
+  const openBook = (rowIndex) => {
+    const id = booksRef.current[rowIndex].id;
 
-    props.history.push("/tutorials/" + id);
+    props.history.push("/livros/" + id);
   };
 
-  const deleteTutorial = (rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
+  const deleteBook = (rowIndex) => {
+    const id = booksRef.current[rowIndex].id;
 
-    TutorialDataService.remove(id)
+    BookDataService.remove(id)
       .then((response) => {
-        props.history.push("/tutorials");
+        props.history.push("/livros");
 
-        let newTutorials = [...tutorialsRef.current];
-        newTutorials.splice(rowIndex, 1);
+        let newBooks = [...booksRef.current];
+        newBooks.splice(rowIndex, 1);
 
-        setTutorials(newTutorials);
+        setBooks(newBooks);
       })
       .catch((e) => {
         console.log(e);
@@ -138,11 +138,11 @@ const TutorialsList = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openTutorial(rowIdx)}>
+              <span onClick={() => openBook(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
 
-              <span onClick={() => deleteTutorial(rowIdx)}>
+              <span onClick={() => deleteBook(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>              
             </div>
@@ -162,7 +162,7 @@ const TutorialsList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: tutorials,
+    data: books,
   });
 
   return (
@@ -246,4 +246,4 @@ const TutorialsList = (props) => {
   );
 };
 
-export default TutorialsList;
+export default BookList;

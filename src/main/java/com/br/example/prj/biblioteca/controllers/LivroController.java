@@ -31,7 +31,7 @@ import com.br.example.prj.biblioteca.models.Book;
 import com.br.example.prj.biblioteca.services.impl.BookServiceImpl;
 
 @RestController
-@RequestMapping("/tutorials")
+@RequestMapping("/livros")
 public class LivroController {
 
 	private final BookServiceImpl bookServiceImpl;
@@ -45,22 +45,22 @@ public class LivroController {
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "4") int size) {
 
 		try {
-			List<Book> tutorials = new ArrayList<Book>();
+			List<Book> books = new ArrayList<Book>();
 			Pageable paging = PageRequest.of(page, size);
 
-			Page<Book> pageTuts;
+			Page<Book> pageBooks;
 			if (title == null)
-				pageTuts = bookServiceImpl.findAll(paging);
+				pageBooks = bookServiceImpl.findAll(paging);
 			else
-				pageTuts = bookServiceImpl.findByTitleContaining(title, paging);
+				pageBooks = bookServiceImpl.findByTitleContaining(title, paging);
 
-			tutorials = pageTuts.getContent();
+			books = pageBooks.getContent();
 
 			Map<String, Object> response = new HashMap<>();
-			response.put("tutorials", tutorials);
-			response.put("currentPage", pageTuts.getNumber());
-			response.put("totalItems", pageTuts.getTotalElements());
-			response.put("totalPages", pageTuts.getTotalPages());
+			response.put("books", books);
+			response.put("currentPage", pageBooks.getNumber());
+			response.put("totalItems", pageBooks.getTotalElements());
+			response.put("totalPages", pageBooks.getTotalPages());
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

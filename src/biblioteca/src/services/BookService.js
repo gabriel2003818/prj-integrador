@@ -1,31 +1,31 @@
 import axios from "axios";
 
 const getAll = (params) => {
-  return axios.get("/tutorials", { params });
+  return axios.get("/livros", { params });
 };
 
 const get = id => {
-  return axios.get(`/tutorials/${id}`);
+  return axios.get(`/livros/${id}`);
 };
 
 const create = data => {
-  return axios.post("/tutorials", data);
+  return axios.post("/livros", data);
 };
 
 const update = (id, data) => {
-  return axios.put(`/tutorials/${id}`, data);
+  return axios.put(`/livros/${id}`, data);
 };
 
 const remove = id => {
-  return axios.delete(`/tutorials/${id}`);
+  return axios.delete(`/livros/${id}`);
 };
 
 const removeAll = () => {
-  return axios.delete(`/tutorials`);
+  return axios.delete(`/livros`);
 };
 
 const findByTitle = title => {
-  return axios.get(`/tutorials?title=${title}`);
+  return axios.get(`/livros?title=${title}`);
 };
 
 export default {

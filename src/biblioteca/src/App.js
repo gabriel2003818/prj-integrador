@@ -15,9 +15,9 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
-import AddTutorial from "./components/AddTutorial"
-import Tutorial from "./components/Tutorial";
-import TutorialsList from "./components/TutorialList";
+import AddBooks from "./components/AddBooks"
+import Book from "./components/Book";
+import BooksList from "./components/BookList";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -112,12 +112,12 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
-          <Route exact path={["/", "/tutorials"]} component={TutorialsList} />
+          <Route exact path={["/", "/livros"]} component={BooksList} />
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
           <Route path="/admin" component={BoardAdmin} />         
-          <Route exact path="/add" component={AddTutorial} />
-          <Route path="/tutorials/:id" component={Tutorial} />
+          <Route exact path="/add" component={AddBooks} />
+          <Route path="/livros/:id" component={Book} />
         </Switch>
       </div>
     </div>
