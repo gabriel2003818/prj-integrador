@@ -3,9 +3,12 @@ package com.br.example.prj.biblioteca.models.Enum;
 import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
+import lombok.Getter;
+
+@Getter	
 public enum BorrowEnum {
+
 	EMPRESTADO(1), ATRASADO(2), DISPONIVEL(3);
 
 	private Integer code;
@@ -20,9 +23,5 @@ public enum BorrowEnum {
 				.orElse(null);
 	}
 
-	@JsonValue
-	public Integer getCode() {
-		return code;
-	}
 
 }

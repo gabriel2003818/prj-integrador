@@ -4,9 +4,7 @@ import BookDataService from "../services/BookService";
 const AddBook = () => {
   const initialBookState = {
     id: null,
-    title: "",
-    description: "",
-    published: false
+    title: ""
   };
   const [book, setBook] = useState(initialBookState);
   const [submitted, setSubmitted] = useState(false);
@@ -19,7 +17,6 @@ const AddBook = () => {
   const saveBook = () => {
     var data = {
       title: book.title,
-      description: book.description
     };
 
     BookDataService.create(data)
@@ -27,8 +24,6 @@ const AddBook = () => {
         setBook({
           id: response.data.id,
           title: response.data.title,
-          description: response.data.description,
-          published: response.data.published
         });
         setSubmitted(true);
         console.log(response.data);
@@ -66,20 +61,6 @@ const AddBook = () => {
               name="title"
             />
           </div>
-
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <input
-              type="text"
-              className="form-control"
-              id="description"
-              required
-              value={book.description}
-              onChange={handleInputChange}
-              name="description"
-            />
-          </div>
-
           <button onClick={saveBook} className="btn btn-success">
             Submit
           </button>

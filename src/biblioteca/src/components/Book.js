@@ -90,41 +90,19 @@ const Book = props => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="description">Description</label>
+            <label htmlFor="title">Status</label>
               <input
                 type="text"
                 className="form-control"
-                id="description"
-                name="description"
-                value={currentBook.description}
+                id="borrow"
+                name="borrow"
+                value={currentBook.borrow}
                 onChange={handleInputChange}
               />
             </div>
-
-            <div className="form-group">
-              <label>
-                <strong>Status:</strong>
-              </label>
-              {currentBook.published ? "Published" : "Pending"}
-            </div>
           </form>
 
-          {currentBook.published ? (
-            <button
-              className="badge badge-primary mr-2"
-              onClick={() => updatePublished(false)}
-            >
-              UnPublish
-            </button>
-          ) : (
-            <button
-              className="badge badge-primary mr-2"
-              onClick={() => updatePublished(true)}
-            >
-              Publish
-            </button>
-          )}
-
+          
           <button className="badge badge-danger mr-2" onClick={deleteBook}>
             Delete
           </button>

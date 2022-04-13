@@ -63,17 +63,6 @@ const BookList = (props) => {
     retrieveBooks();
   };
 
-  const removeAllBooks = () => {
-    BookDataService.removeAll()
-      .then((response) => {
-        console.log(response.data);
-        refreshList();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   const findByTitle = () => {
     setPage(1);
     retrieveBooks();
@@ -114,28 +103,28 @@ const BookList = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: "ID",
+        accessor: "bookId",
+      },
+      {
         Header: "Título",
         accessor: "title",
       },
       {
         Header: "Categoria",
         accessor: "category",
-        Cell: (props) => {
-          return props.value ? "CURIOSIDADES" : "INFANTO_JUVENIL_ATUAL";
-        },
       },
       {
         Header: "Status",
-        accessor: "published",
-        Cell: (props) => {
-          return props.value ? "1" : "2";
-        },
+        accessor: "borrow",
       },
       {
         Header: "Actions",
         accessor: "actions",
         Cell: (props) => {
           const rowIdx = props.row.id;
+         // const rowIdx = props.value.id
+          console.log("teste" + rowIdx)
           return (
             <div>
               <span onClick={() => openBook(rowIdx)}>

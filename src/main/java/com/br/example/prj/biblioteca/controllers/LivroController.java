@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -44,15 +45,16 @@ public class LivroController {
 	public ResponseEntity<Map<String, Object>> getAllBooks(@RequestParam(required = false) String title,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "4") int size) {
 
-		try {
+		try {		
+			
 			List<Book> books = new ArrayList<Book>();
 			Pageable paging = PageRequest.of(page, size);
 
-			Page<Book> pageBooks;
+			Page<Book> pageBooks = null;
 			if (title == null)
 				pageBooks = bookServiceImpl.findAll(paging);
 			else
-				pageBooks = bookServiceImpl.findByTitleContaining(title, paging);
+				pageBooks = bookServiceImpl.findByTitleContaining(title, paging);		
 
 			books = pageBooks.getContent();
 
@@ -64,6 +66,18 @@ public class LivroController {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	@GetMapping("/{bookId}")
+	public ResponseEntity<Object> getBook(@PathVariable Long bookId){
+		
+		Optional<Book> currentBook = bookServiceImpl.findById(bookId);
+
+		if (currentBook.isPresent()) {
+			return new ResponseEntity<>(currentBook.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
 	}
