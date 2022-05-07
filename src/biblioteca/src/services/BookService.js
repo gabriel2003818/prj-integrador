@@ -1,14 +1,11 @@
 import axios from "axios";
-import authHeader from "./auth-header";
-
-const API_URL = "http://localhost:8080/livros";
 
 const getAll = (params) => {
   return axios.get("/livros", { params});
 };
 
 const get = id => {
-  return axios.get(`livros/${id}`);
+  return axios.get(id);
 };
 
 const create = data => {
@@ -16,7 +13,7 @@ const create = data => {
 };
 
 const update = (id, data) => {
-  return axios.put(`livros/${id}`, data);
+  return axios.put(id, data);
 };
 
 const remove = id => {

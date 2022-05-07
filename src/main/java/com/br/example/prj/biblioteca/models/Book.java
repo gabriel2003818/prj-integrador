@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.br.example.prj.biblioteca.models.Enum.BorrowEnum;
 import com.br.example.prj.biblioteca.models.Enum.CategoryEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Book {
 	private BorrowEnum borrow;
 	private Integer quantity;
 	private LocalDateTime createdAt;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 	
 	
@@ -45,6 +47,10 @@ public class Book {
 		this.quantity = quantity;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+	}
+
+	public Book(String title) {
+		this.title = title;
 	}
 	
 

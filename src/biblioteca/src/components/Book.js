@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import BookDataService from "../services/BookService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const Book = props => {
   const initialBookState = {
-    id: null,
+    bookId: null,
     title: "",
-    description: "",
-    published: false
   };
   const [currentBook, setCurrentBook] = useState(initialBookState);
   const [message, setMessage] = useState("");
 
   const getBook = id => {
-    BookDataService.get(id)
+    BookDataService.get(id)   
       .then(response => {
         setCurrentBook(response.data);
         console.log(response.data);
@@ -35,26 +37,26 @@ const Book = props => {
     var data = {
       id: currentBook.id,
       title: currentBook.title,
-      description: currentBook.description,
-      published: status
     };
 
     BookDataService.update(currentBook.id, data)
       .then(response => {
-        setCurrentBook({ ...currentBook, published: status });
-        console.log(response.data);
-        setMessage("The status was updated successfully!");
+        setCurrentBook({ ...currentBook});
+        console.log(response.data);        
+        //setMessage("The status was updated successfully!");
       })
       .catch(e => {
         console.log(e);
       });
   };
-
+ 
   const updateBook = () => {
-    BookDataService.update(currentBook.id, currentBook)
+    
+    BookDataService.update(currentBook.bookId, currentBook)
       .then(response => {
-        console.log(response.data);
-        setMessage("The Book was updated successfully!");
+       
+        toast("Wow so easy !")
+        //console.log(response.data);
       })
       .catch(e => {
         console.log(e);

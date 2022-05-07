@@ -27,34 +27,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.example.prj.biblioteca.DTO.request.RequestCreateBookDto;
+import com.br.example.prj.biblioteca.DTO.request.RequestUpdateBookDto;
 import com.br.example.prj.biblioteca.DTO.response.ResponseCreateBookDto;
 import com.br.example.prj.biblioteca.models.Book;
-import com.br.example.prj.biblioteca.services.impl.BookServiceImpl;
+import com.br.example.prj.biblioteca.services.BookService;
 
 @RestController
 @RequestMapping("/livros")
 public class LivroController {
 
-	private final BookServiceImpl bookServiceImpl;
+	private final BookService bookService;
 
-	public LivroController(BookServiceImpl bookServiceImpl) {
-		this.bookServiceImpl = bookServiceImpl;
+	public LivroController(BookService bookService) {
+		this.bookService = bookService;
 	}
 
 	@GetMapping
 	public ResponseEntity<Map<String, Object>> getAllBooks(@RequestParam(required = false) String title,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "4") int size) {
 
-		try {		
-			
+		try {
+
 			List<Book> books = new ArrayList<Book>();
 			Pageable paging = PageRequest.of(page, size);
 
 			Page<Book> pageBooks = null;
 			if (title == null)
-				pageBooks = bookServiceImpl.findAll(paging);
+				pageBooks = bookService.findAll(paging);
 			else
-				pageBooks = bookServiceImpl.findByTitleContaining(title, paging);		
+				pageBooks = bookService.findByTitleContaining(title, paging);
 
 			books = pageBooks.getContent();
 
@@ -69,10 +70,11 @@ public class LivroController {
 		}
 
 	}
+
 	@GetMapping("/{bookId}")
-	public ResponseEntity<Object> getBook(@PathVariable Long bookId){
-		
-		Optional<Book> currentBook = bookServiceImpl.findById(bookId);
+	public ResponseEntity<Object> getBook(@PathVariable Long bookId) {
+
+		Optional<Book> currentBook = bookService.findById(bookId);
 
 		if (currentBook.isPresent()) {
 			return new ResponseEntity<>(currentBook.get(), HttpStatus.OK);
@@ -84,36 +86,33 @@ public class LivroController {
 
 	@PostMapping("/add")
 	public ResponseEntity<Object> createBook(@Valid @RequestBody RequestCreateBookDto dto) throws URISyntaxException {
-		
-		Book book = dto.convertDTOToEntity();
-		Book bookToCreate = bookServiceImpl.save(book);
-		
-		ResponseCreateBookDto response = ResponseCreateBookDto.builder()
-				.title(bookToCreate.getTitle())
-				.quantity(bookToCreate.getQuantity())
-				.build();
-		
-		return ResponseEntity.created(new URI("/livros" + book.getBookId())).body(response);
-		
-	}
-	 @PutMapping("/{bookId}")
-	    public ResponseEntity<Object> updateLivro(@PathVariable Long bookId, @RequestBody Book book) {
-	        Book currentBook = bookServiceImpl.findById(bookId).orElseThrow(RuntimeException::new);
-							        currentBook.setTitle(book.getTitle());
-							        currentBook.setBorrow(book.getBorrow());
-							        currentBook.setCategory(book.getCategory());
-							        currentBook.setQuantity(book.getQuantity());
-							        currentBook.setUpdatedAt(LocalDateTime.now());
-							        currentBook.setBorrow(book.getBorrow());
-							        
-			bookServiceImpl.save(currentBook);
-	        return ResponseEntity.ok(currentBook);
-	    }
 
-	    @DeleteMapping("/{bookId}")
-	    public ResponseEntity<Object> deleteLivro(@PathVariable Long bookId) {
-	        bookServiceImpl.deleteBookById(bookId);
-	        return ResponseEntity.ok().build();
-	    }
+		Book book = dto.convertDTOToEntity();
+		Book bookToCreate = bookService.save(book);
+
+		ResponseCreateBookDto response = ResponseCreateBookDto.builder().title(bookToCreate.getTitle())
+				.quantity(bookToCreate.getQuantity()).build();
+
+		return ResponseEntity.created(new URI("/livros" + book.getBookId())).body(response);
+
+	}
+
+	@PutMapping("/{bookId}")
+	public ResponseEntity<Object> updateLivro(@PathVariable Long bookId, @RequestBody RequestUpdateBookDto book) {
+		Book currentBook = bookService.findById(bookId).orElseThrow(RuntimeException::new);
+		currentBook.setTitle(book.getTitle());
+		// currentBook.setBorrow(book.getBorrow());
+		// currentBook.setCategory(book.getCategory());
+		// currentBook.setQuantity(book.getQuantity());
+		currentBook.setUpdatedAt(LocalDateTime.now());
+		bookService.save(currentBook);
+		return ResponseEntity.ok(currentBook);
+	}
+
+	@DeleteMapping("/{bookId}")
+	public ResponseEntity<Object> deleteLivro(@PathVariable Long bookId) {
+		bookService.deleteBookById(bookId);
+		return ResponseEntity.ok().build();
+	}
 
 }
