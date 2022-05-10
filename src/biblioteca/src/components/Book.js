@@ -75,51 +75,25 @@ const Book = props => {
   return (
     <div>
       {currentBook ? (
-        <div className="edit-form">
-          <h4>Book</h4>
-          <form>
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                name="title"
-                value={currentBook.title}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-            <label htmlFor="title">Status</label>
-              <input
-                type="text"
-                className="form-control"
-                id="borrow"
-                name="borrow"
-                value={currentBook.borrow}
-                onChange={handleInputChange}
-              />
-            </div>
-          </form>
-
-          
-          <button className="badge badge-danger mr-2" onClick={deleteBook}>
-            Delete
-          </button>
-
-          <button
-            type="submit"
-            className="badge badge-success"
-            onClick={updateBook}
-          >
-            Update
-          </button>
+        <div className="container">
+          <div className="mb-3">
+            <label for="title">Título</label>
+            <input type="text" className="form-control" id="title" name="title" value={currentBook.title} onChange={handleInputChange} />
+          </div>
+          <div className="mb-3">
+            <label for="title">Status</label>
+            <input type="text" className="form-control" id="borrow" name="borrow" value={currentBook.borrow} onChange={handleInputChange} />
+          </div>
+          <div className="d-grid gap-2 d-md-block">
+            <button type="submit" className="btn btn-success" onClick={updateBook}>Atualizar</button>
+            <button className="btn btn-danger" onClick={deleteBook}>Excluir</button>
+          </div>
           <p>{message}</p>
         </div>
       ) : (
         <div>
           <br />
-          <p>Please click on a Book...</p>
+          <p>Por favor, clique em um livro...</p>
         </div>
       )}
     </div>

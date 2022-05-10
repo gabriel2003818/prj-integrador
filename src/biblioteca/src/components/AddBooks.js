@@ -44,26 +44,18 @@ const AddBook = () => {
         <div>
           <h4>You submitted successfully!</h4>
           <button className="btn btn-success" onClick={newBook}>
-            Add
+            Criar
           </button>
         </div>
       ) : (
-        <div>
-          <div className="form-group">
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              required
-              value={book.title}
-              onChange={handleInputChange}
-              name="title"
-            />
+        <div className="container">
+          <div className="mb-3">
+            <label for="title">Título</label>
+            <input type="text" placeholder="Insira o título do livro" required className="form-control" id="title" />
           </div>
-          <button onClick={saveBook} className="btn btn-success">
-            Submit
-          </button>
+          <div className="mb-3">
+              <button type="submit" className="btn btn-primary" onClick={saveBook}>Criar</button>
+          </div>
         </div>
       )}
     </div>

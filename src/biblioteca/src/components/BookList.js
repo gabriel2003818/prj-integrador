@@ -123,8 +123,7 @@ const BookList = (props) => {
         accessor: "actions",
         Cell: (props) => {
           const rowIdx = props.row.id;
-         // const rowIdx = props.value.id
-          console.log("teste" + rowIdx)
+          console.log("teste" + props.row.id)
           return (
             <div>
               <span onClick={() => openBook(rowIdx)}>
@@ -133,9 +132,9 @@ const BookList = (props) => {
 
               <span onClick={() => deleteBook(rowIdx)}>
                 <i className="fas fa-trash action"></i>
-              </span>              
+              </span>
             </div>
-            
+
           );
         },
       },
@@ -155,30 +154,17 @@ const BookList = (props) => {
   });
 
   return (
-    <div className="list row">
-      <div className="col-md-8">
-        <div className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by title"
-            value={searchTitle}
-            onChange={onChangeSearchTitle}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByTitle}
-            >
-              Search
-            </button>
-          </div>
+    <div className="container">
+      <div className="input-group mb-3">
+        <div className="col-md-8">
+          <input type="text" className="form-control" placeholder="Busque pelo título" value={searchTitle} onChange={onChangeSearchTitle} />
+        </div>
+        <div className="col-md-4">
+          <button className="btn btn-primary" type="button" onClick={findByTitle}>Buscar</button>
         </div>
       </div>
-
-      <div className="col-md-12 list">
-        <div className="mt-3">
+      <div className="input-group mb-3">
+        <div class="col-12 d-md-flex justify-content-md-end">
           {"Items per Page: "}
           <select onChange={handlePageSizeChange} value={pageSize}>
             {pageSizes.map((size) => (
@@ -187,21 +173,11 @@ const BookList = (props) => {
               </option>
             ))}
           </select>
-
-          <Pagination
-            className="my-3"
-            count={count}
-            page={page}
-            siblingCount={1}
-            boundaryCount={1}
-            variant="outlined"
-            shape="rounded"
-            onChange={handlePageChange}
-          />
         </div>
-
+      </div>
+      <div className="col-md-12 list">
         <table
-          className="table table-striped table-bordered"
+          className="table table-bordered table-striped table-hover"
           {...getTableProps()}
         >
           <thead>
@@ -230,6 +206,13 @@ const BookList = (props) => {
             })}
           </tbody>
         </table>
+      </div>
+      <div className="input-group mb-3">
+        <div className="col-12 d-md-flex justify-content-md-end">
+          <div className="mt-3">
+            <Pagination className="my-3" count={count} page={page} siblingCount={1} boundaryCount={1} variant="outlined" shape="rounded" onChange={handlePageChange} />
+          </div>
+        </div>
       </div>
     </div>
   );

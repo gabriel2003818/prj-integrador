@@ -18,6 +18,9 @@ import BoardAdmin from "./components/BoardAdmin";
 import AddBooks from "./components/AddBooks"
 import Book from "./components/Book";
 import BooksList from "./components/BookList";
+import StudentList from "./components/StudentList";
+import CreateStudent from "./components/CreateStudents";
+import Student from "./components/Student";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -113,11 +116,14 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path={["/", "/livros"]} component={BooksList} />
+          <Route exact path={["/", "/alunos"]} component={StudentList} />
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
           <Route path="/admin" component={BoardAdmin} />         
           <Route exact path="/add" component={AddBooks} />
+          <Route exact path="/create" component={CreateStudent} />
           <Route path="/livros/:id" component={Book} />
+          <Route path="/alunos/:id" component={Student} />
         </Switch>
       </div>
     </div>
