@@ -1,16 +1,14 @@
 package com.br.example.prj.biblioteca.services.impl;
 
-import com.br.example.prj.biblioteca.models.Book;
-import com.br.example.prj.biblioteca.repositories.BookRepository;
-import com.br.example.prj.biblioteca.services.BookService;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import com.br.example.prj.biblioteca.models.Book;
+import com.br.example.prj.biblioteca.repositories.BookRepository;
+import com.br.example.prj.biblioteca.services.BookService;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -37,14 +35,15 @@ public class BookServiceImpl implements BookService {
 		// TODO Auto-generated method stub
 		return bookRepository.save(book);
 	}
-	@Override
-    public Optional<Book> findById(Long bookId) {
-        return bookRepository.findById(bookId);
-    }
 
 	@Override
-    public void deleteBookById(Long bookId) {
-        bookRepository.deleteById(bookId);
-    }
+	public Optional<Book> findById(Long bookId) {
+		return bookRepository.findById(bookId);
+	}
+
+	@Override
+	public void deleteBookById(Long bookId) {
+		bookRepository.deleteById(bookId);
+	}
 
 }

@@ -4,9 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 
-import com.br.example.prj.biblioteca.models.Book;
-import com.br.example.prj.biblioteca.models.Enum.BorrowEnum;
-import com.br.example.prj.biblioteca.models.Enum.CategoryEnum;
+import com.br.example.prj.biblioteca.models.Student;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -20,34 +18,28 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RequestCreateBookDto {
-	
-	@NotNull(message = "Título não pode ser nulo")
-	private String title;
-	
-	private Integer borrow;
-	
-	private Integer category;
-	
-	private Integer quantity;
-	
+public class RequestCreateStudentDto {
+
+	@NotNull(message = "Nome não pode ser nulo")
+	private String name;
+
+	private String grade;
+
+	private String email;
+
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS", locale = "en/US",timezone = "Brasil/East")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS", locale = "en/US", timezone = "Brasil/East")
 	private LocalDateTime createdAt = LocalDateTime.now();
-	
+
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS", locale = "en/US",timezone = "Brasil/East")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS", locale = "en/US", timezone = "Brasil/East")
 	private LocalDateTime updatedAt = LocalDateTime.now();
-	
-	
-	
-	public Book convertDTOToEntity() {
-		BorrowEnum borrow = BorrowEnum.decode(this.borrow);
-		CategoryEnum category = CategoryEnum.decode(this.category);
-		return new Book(title,category,borrow,quantity,createdAt, updatedAt);
-	
+
+	public Student convertDTOToEntity() {
+		return new Student(name, grade, email, createdAt, updatedAt);
+
 	}
 
 }
