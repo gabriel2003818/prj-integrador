@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "@fortawesome/fontawesome-free/css/all.css";
-import "@fortawesome/fontawesome-free/js/all.js";
 import "./App.css";
-
 
 import AuthService from "./services/auth.service";
 
@@ -15,9 +12,6 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
-import AddBooks from "./components/AddBooks"
-import Book from "./components/Book";
-import BooksList from "./components/BookList";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -112,12 +106,9 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
-          <Route exact path={["/", "/livros"]} component={BooksList} />
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
-          <Route path="/admin" component={BoardAdmin} />         
-          <Route exact path="/add" component={AddBooks} />
-          <Route path="/livros/:id" component={Book} />
+          <Route path="/admin" component={BoardAdmin} />
         </Switch>
       </div>
     </div>
