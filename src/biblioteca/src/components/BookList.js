@@ -69,7 +69,8 @@ const BookList = (props) => {
   };
 
   const openBook = (rowIndex) => {
-    const id = booksRef.current[rowIndex].id;
+    const id = booksRef.current[rowIndex].bookId;
+    console.log("openBook id: " + id ) 
 
     props.history.push("/livros/" + id);
   };
